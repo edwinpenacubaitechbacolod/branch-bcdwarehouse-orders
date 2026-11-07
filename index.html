@@ -1,111 +1,111 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#174ea6">
-  <title>Branch Orders Management System</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--navy:#123b73;--blue:#1d5fba;--blue2:#3478d4;--bg:#f3f6fb;--surface:#fff;--text:#17253b;--muted:#68778d;--line:#e2e9f2;--green:#16865c;--greenbg:#e5f6ee;--orange:#a85d0a;--orangebg:#fff2df;--red:#bd3346;--redbg:#ffeaed;--shadow:0 8px 24px #183b6810}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Inter,system-ui,sans-serif}
-    button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
-    .topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100% - 1200px)/2));position:sticky;top:0;z-index:5}
-    .brand{display:flex;align-items:center;gap:11px;font-weight:800;color:var(--navy);font-size:16px}.logo{width:36px;height:36px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:18px}
-    .userbar{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px}.wrap{max-width:1200px;margin:26px auto;padding:0 20px}
-    .login{max-width:420px;margin:8vh auto;background:#fff;padding:28px;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
-    h1{font-size:25px;letter-spacing:-.7px;margin:0 0 6px}h2{font-size:18px;margin:0 0 16px}h3{font-size:14px;margin:0 0 12px}.muted{color:var(--muted)}.small{font-size:12px}
-    label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:12px 0 6px}
-    input,select,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff;color:var(--text);outline:none}
-    input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1d5fba18}
-    .btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700;background:var(--blue);color:#fff}.btn:hover{background:var(--navy)}.btn.secondary{background:#edf3fb;color:var(--navy)}.btn.danger{background:var(--red)}.btn:disabled{opacity:.45;cursor:not-allowed}
-    .layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:22px}.sidebar{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;height:max-content;position:sticky;top:88px}
-    .nav{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:9px;color:var(--muted);font-weight:650;cursor:pointer;margin:3px 0}.nav.active,.nav:hover{background:#eaf2ff;color:var(--blue)}
-    .pagehead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px}.pagehead p{margin:4px 0 0;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}.stat,.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;box-shadow:var(--shadow)}
-    .stat .num{font-size:27px;font-weight:800;color:var(--navy);margin-top:5px}.stat .label{color:var(--muted);font-size:12px;font-weight:650}
-    .card{margin-bottom:16px}.row{display:flex;gap:12px;align-items:center}.between{justify-content:space-between}.grow{flex:1;min-width:0}
-    .products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:1fr 105px;gap:10px;align-items:center}.product strong{display:block}.product small{color:var(--muted)}
-    .qty{display:flex;align-items:center;gap:4px}.qty button{width:29px;height:32px;border:1px solid var(--line);background:#f5f8fc;border-radius:8px;color:var(--blue);font-weight:800}.qty input{padding:6px;text-align:center;min-width:0}
-    .tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:12px}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;background:#f8fafd}
-    .pill{display:inline-block;padding:4px 8px;border-radius:20px;background:#eaf2ff;color:var(--blue);font-size:11px;font-weight:750}.pill.green{background:var(--greenbg);color:var(--green)}.pill.orange{background:var(--orangebg);color:var(--orange)}.pill.red{background:var(--redbg);color:var(--red)}
-    .notice{padding:11px 13px;border-radius:10px;background:#eaf2ff;color:var(--navy);font-size:12px;margin:12px 0}.error{background:var(--redbg);color:var(--red)}.success{background:var(--greenbg);color:var(--green)}
-    .empty{text-align:center;padding:28px;color:var(--muted)}.actions{display:flex;gap:7px;flex-wrap:wrap}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:12px 16px;background:#17253b;color:#fff;border-radius:10px;z-index:20;box-shadow:var(--shadow);max-width:90vw}
-    @media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow:auto}.nav{white-space:nowrap}.grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:560px){.wrap{padding:0 12px;margin:16px auto}.topbar{padding:0 13px}.products{grid-template-columns:1fr}.grid{gap:8px}.stat{padding:12px}.stat .num{font-size:22px}.pagehead{flex-direction:column}.userbar span{display:none}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5146d8">
+<title>Bacolod Warehouse | Branch Ordering</title>
+<style>
+:root{--bg:#f5f6fc;--surface:#fff;--surface2:#f8f8ff;--text:#20223a;--muted:#777b96;--line:#e8e9f3;--primary:#5548dc;--primary2:#7668f0;--soft:#efedff;--green:#16875c;--greenbg:#e8f8f0;--orange:#b66a17;--orangebg:#fff4e5;--red:#c43f54;--shadow:0 12px 35px rgba(42,39,100,.08);--radius:18px}
+[data-theme="dark"]{--bg:#151624;--surface:#202235;--surface2:#272a40;--text:#f1f1fb;--muted:#a6a8c0;--line:#373a52;--primary:#9389ff;--primary2:#aaa2ff;--soft:#343052;--green:#65d6a4;--greenbg:#1d3b35;--orange:#ffc16d;--orangebg:#473522;--red:#ff8393;--shadow:0 12px 35px rgba(0,0,0,.22)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;transition:background .2s,color .2s}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1080px;margin:auto;padding:22px 18px 44px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,#5548dc,#9589ff);display:grid;place-items:center;color:white;font-size:21px;box-shadow:0 7px 18px #5548dc35}.brand h1{font-size:17px;line-height:1.2;margin:0;font-weight:800;letter-spacing:-.3px}.brand p{margin:3px 0 0;color:var(--muted);font-size:11px}.top-actions{display:flex;gap:8px;align-items:center}.icon-btn{border:1px solid var(--line);background:var(--surface);color:var(--text);height:38px;width:40px;border-radius:12px}.live{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px;padding:8px 11px;border:1px solid var(--line);background:var(--surface);border-radius:99px}.dot{width:7px;height:7px;border-radius:50%;background:#18b879;box-shadow:0 0 0 4px #18b87920}.tabs{display:flex;gap:7px;background:var(--surface2);padding:5px;border:1px solid var(--line);border-radius:15px;margin-bottom:18px}.tab{border:0;background:transparent;color:var(--muted);padding:10px 17px;border-radius:11px;font-weight:700;font-size:13px}.tab.active{background:var(--surface);color:var(--primary);box-shadow:0 3px 12px #28245b12}.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.main-panel{padding:20px}.side-panel{padding:18px;position:sticky;top:14px}.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:17px}.section-head h2{font-size:19px;margin:0;letter-spacing:-.4px}.section-head p{color:var(--muted);margin:4px 0 0;font-size:12px}.field{margin-bottom:15px}.field label{display:block;font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.45px;text-transform:uppercase;margin-bottom:7px}.field select,.field textarea,.field input{width:100%;border:1px solid var(--line);border-radius:11px;background:var(--surface2);color:var(--text);padding:11px 12px;outline:none}.field select:focus,.field textarea:focus,.field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 14%,transparent)}.field textarea{resize:vertical;min-height:76px}.products{display:grid;grid-template-columns:1fr 1fr;gap:10px}.product{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;gap:9px;min-width:0}.product-info{min-width:0}.product-name{font-weight:750;font-size:13px;line-height:1.25}.unit{color:var(--muted);font-size:11px;margin-top:3px}.stepper{display:flex;align-items:center;gap:5px;flex-shrink:0}.stepper button{width:29px;height:29px;border-radius:9px;border:1px solid var(--line);background:var(--surface2);color:var(--primary);font-size:17px;font-weight:700;display:grid;place-items:center}.stepper input{width:42px;text-align:center;border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:8px;height:29px;font-weight:800;padding:0;font-size:12px}.side-title{font-size:14px;font-weight:800;margin:0 0 12px}.total-line{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;padding:9px 0;border-bottom:1px solid var(--line)}.total-line strong{color:var(--text)}.total-big{display:flex;justify-content:space-between;align-items:center;padding:14px 0 16px;font-weight:800}.total-big strong{font-size:24px;color:var(--primary)}.primary-btn,.secondary-btn{width:100%;border:0;border-radius:12px;padding:12px 14px;font-weight:800}.primary-btn{background:linear-gradient(135deg,var(--primary),var(--primary2));color:white;box-shadow:0 8px 18px #5548dc30}.primary-btn:disabled{opacity:.45;cursor:not-allowed}.secondary-btn{background:var(--soft);color:var(--primary);margin-top:8px}.hint{color:var(--muted);font-size:10px;line-height:1.5;margin:10px 0 0}.history{margin-top:20px}.history h3{font-size:14px;margin:0 0 10px}.order-mini{border:1px solid var(--line);border-radius:12px;padding:11px;margin-top:8px;display:flex;justify-content:space-between;gap:10px;font-size:12px}.order-mini small{display:block;color:var(--muted);margin-top:3px}.status{font-size:10px;font-weight:800;border-radius:99px;padding:5px 8px;background:var(--soft);color:var(--primary);white-space:nowrap;height:max-content}.status.delivered{background:var(--greenbg);color:var(--green)}.status.shipped{background:#e9f1ff;color:#3973bd}.status.picking{background:var(--orangebg);color:var(--orange)}.empty{padding:25px 12px;text-align:center;color:var(--muted);font-size:12px;border:1px dashed var(--line);border-radius:13px}.warehouse-tools{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}.warehouse-tools select,.warehouse-tools input{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--surface2);color:var(--text);min-width:145px}.order-card{border:1px solid var(--line);border-radius:15px;margin:10px 0;overflow:hidden;background:var(--surface)}.order-card summary{list-style:none;cursor:pointer;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.order-card summary::-webkit-details-marker{display:none}.order-card summary strong{font-size:13px}.order-card summary small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.order-body{padding:0 14px 14px;border-top:1px solid var(--line)}.order-items{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:12px 0;font-size:12px}.order-items span{color:var(--muted)}.order-note{background:var(--surface2);padding:9px;border-radius:9px;color:var(--muted);font-size:11px;margin-bottom:10px}.order-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.order-actions select{border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:8px 10px;border-radius:9px}.small-btn{border:0;border-radius:9px;background:var(--soft);color:var(--primary);font-weight:800;padding:8px 11px;font-size:11px}.footer{text-align:center;color:var(--muted);font-size:10px;margin-top:22px}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);background:#25243c;color:white;padding:11px 16px;border-radius:12px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;z-index:10;font-size:12px}.toast.show{opacity:1;transform:translate(-50%,0)}.hidden{display:none!important}.badge{font-size:10px;color:var(--muted);background:var(--surface2);padding:5px 8px;border-radius:99px}
+@media(max-width:760px){.app{padding:14px 12px 30px}.layout{grid-template-columns:1fr}.side-panel{position:static;order:-1}.main-panel{padding:15px}.products{grid-template-columns:1fr}.product{padding:11px}.section-head h2{font-size:17px}.brand h1{font-size:15px}.live{padding:7px 9px}.order-items{grid-template-columns:1fr 1fr}.tabs{position:sticky;top:0;z-index:4}.side-panel{padding:15px}.history{margin-top:16px}}
+@media(min-width:761px){.side-panel{position:sticky}.product:hover{border-color:color-mix(in srgb,var(--primary) 45%,var(--line))}}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand"><div class="logo">▦</div><span>Branch Orders</span></div>
-    <div class="userbar"><span id="userLabel">Not signed in</span><button id="logoutBtn" class="btn secondary hidden">Sign out</button></div>
-  </header>
-
-  <main class="wrap">
-    <section id="loginView" class="login">
-      <h1>Welcome back</h1><p class="muted">Sign in to the Branch Orders Management System.</p>
-      <form id="loginForm">
-        <label for="email">Email address</label><input id="email" type="email" autocomplete="username" required>
-        <label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required>
-        <button class="btn" style="width:100%;margin-top:18px">Sign in</button>
-      </form>
-      <div id="loginMessage" class="notice hidden"></div>
-      <p class="small muted">Accounts are created by the system administrator. Public self-registration is disabled.</p>
-    </section>
-
-    <section id="appView" class="hidden">
-      <div class="layout">
-        <aside class="sidebar">
-          <div class="nav active" data-page="dashboard">▦ Dashboard</div>
-          <div class="nav" data-page="orders">▤ Orders</div>
-          <div class="nav" data-page="new-order" id="newOrderNav">＋ New Order</div>
-          <div class="nav" data-page="inventory" id="inventoryNav">▣ Inventory</div>
-        </aside>
-        <section class="grow">
-          <div id="dashboardPage" class="page">
-            <div class="pagehead"><div><h1>Dashboard</h1><p>Branch and warehouse operations overview.</p></div></div>
-            <div class="grid">
-              <div class="stat"><div class="label">Total orders</div><div class="num" id="statTotal">—</div></div>
-              <div class="stat"><div class="label">New / approved</div><div class="num" id="statNew">—</div></div>
-              <div class="stat"><div class="label">Preparing</div><div class="num" id="statPreparing">—</div></div>
-              <div class="stat"><div class="label">Shipped</div><div class="num" id="statShipped">—</div></div>
-            </div>
-            <div class="card"><h2>Recent orders</h2><div id="recentOrders" class="tablewrap"></div></div>
-          </div>
-
-          <div id="ordersPage" class="page hidden">
-            <div class="pagehead"><div><h1>Order management</h1><p>Review progress and update warehouse operations.</p></div></div>
-            <div class="card">
-              <div class="row" style="margin-bottom:12px;flex-wrap:wrap">
-                <input id="orderSearch" placeholder="Search order number or branch" style="max-width:300px">
-                <select id="statusFilter" style="max-width:190px"><option value="">All statuses</option><option>Approved</option><option>Preparing</option><option>Ready for Dispatch</option><option>Shipped</option><option>Completed</option><option>Cancelled</option></select>
-              </div>
-              <div id="ordersTable" class="tablewrap"></div>
-            </div>
-          </div>
-
-          <div id="new-orderPage" class="page hidden">
-            <div class="pagehead"><div><h1>New branch order</h1><p>Choose supplies and submit your request.</p></div></div>
-            <div class="card">
-              <h2>Available supplies</h2><div id="productList" class="products"><div class="empty">Loading products…</div></div>
-              <label for="orderNote">Order remarks (optional)</label><textarea id="orderNote" rows="3" maxlength="300" placeholder="Delivery instructions or additional information"></textarea>
-              <div class="notice">Orders are automatically approved after stock validation. Inventory is deducted immediately upon approval. If stock is insufficient, submission is blocked and the shortage is shown.</div>
-              <div class="row between"><strong id="cartSummary">0 products selected</strong><button id="submitOrder" class="btn" disabled>Submit order</button></div>
-            </div>
-          </div>
-
-          <div id="inventoryPage" class="page hidden">
-            <div class="pagehead"><div><h1>Warehouse inventory</h1><p>Current stock balances and replenishment thresholds.</p></div></div>
-            <div class="card"><div id="inventoryTable" class="tablewrap"></div></div>
-          </div>
-        </section>
-      </div>
-    </section>
+<div class="app">
+<header class="topbar">
+ <div class="brand"><div class="logo">📦</div><div><h1>Bacolod Warehouse</h1><p>Branch Supply Ordering</p></div></div>
+ <div class="top-actions"><div class="live"><span class="dot" id="connectionDot"></span><span id="connectionText">Connecting</span></div><button class="icon-btn" id="themeBtn" aria-label="Toggle theme">☾</button></div>
+</header>
+<nav class="tabs" aria-label="Main navigation"><button class="tab active" data-tab="order">＋ New Order</button><button class="tab" data-tab="warehouse">▤ Warehouse</button></nav>
+<section id="orderView">
+ <div class="layout">
+  <main class="panel main-panel">
+   <div class="section-head"><div><h2>Create branch order</h2><p>Select your branch and enter the quantities needed.</p></div><span class="badge">Order form</span></div>
+   <div class="field"><label for="branch">Branch</label><select id="branch"><option value="">Choose branch</option><option>ITECH BACOLOD</option><option>GAMEONE BACOLOD</option><option>DV BACOLOD</option><option>ITECH ILOILO</option><option>ITECH DUMAGUETE</option></select></div>
+   <div class="section-head" style="margin:18px 0 10px"><div><h2 style="font-size:15px">Available supplies</h2><p>Enter the quantity for each item.</p></div></div>
+   <div class="products" id="products"></div>
+   <div class="field" style="margin-top:17px;margin-bottom:0"><label for="note">Order notes <span style="font-weight:500;text-transform:none;letter-spacing:0">(optional, max 300 characters)</span></label><textarea id="note" maxlength="300" placeholder="Add delivery instructions or other details..."></textarea></div>
   </main>
-  <div id="toast" class="toast hidden" role="status"></div>
-
-  <script type="module" src="./app.js"></script>
+  <aside class="panel side-panel">
+   <h3 class="side-title">Order summary</h3>
+   <div class="total-line"><span>Branch</span><strong id="summaryBranch">Not selected</strong></div>
+   <div class="total-line"><span>Items requested</span><strong id="itemCount">0</strong></div>
+   <div class="total-line"><span>Total quantity</span><strong id="totalQty">0</strong></div>
+   <div class="total-big"><span>Order total</span><strong id="summaryTotal">0</strong></div>
+   <button class="primary-btn" id="submitOrder" disabled>Send Order →</button>
+   <p class="hint">Your order will be sent to the warehouse and appear in your branch order history. Please review quantities before sending.</p>
+   <div class="history"><h3>Recent orders</h3><div id="branchHistory"><div class="empty">Choose a branch to view its orders.</div></div></div>
+  </aside>
+ </div>
+</section>
+<section id="warehouseView" class="hidden">
+ <div class="panel main-panel">
+  <div class="section-head"><div><h2>Warehouse order board</h2><p>Review incoming requests and update their fulfillment status.</p></div><span class="badge" id="orderCountBadge">0 orders</span></div>
+  <div class="warehouse-tools"><input id="searchOrders" type="search" placeholder="Search order or branch..."><select id="filterBranch"><option value="">All branches</option><option>ITECH BACOLOD</option><option>GAMEONE BACOLOD</option><option>DV BACOLOD</option><option>ITECH ILOILO</option><option>ITECH DUMAGUETE</option></select><select id="filterStatus"><option value="">All statuses</option><option>New</option><option>Picking</option><option>Shipped</option><option>Delivered</option></select></div>
+  <div id="warehouseOrders"><div class="empty">Connecting to the order database…</div></div>
+ </div>
+</section>
+<div class="footer">Bacolod Warehouse · Branch Supply Ordering</div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script type="module">
+/* ===================== SETUP =====================
+   1. Create a Firebase project and enable Cloud Firestore.
+   2. Paste your Firebase web-app config below.
+   3. Create a Firestore database and deploy secure rules (see setup notes).
+   4. Optional: add EmailJS keys below for email notifications.
+================================================== */
+const FIREBASE_CONFIG = {
+  apiKey: "YOUR_FIREBASE_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+const WAREHOUSE_PIN = "2468"; // Change this. Client-side PIN is a convenience lock, not strong security.
+const EMAILJS_PUBLIC_KEY = "YOUR_EMAILJS_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = "YOUR_EMAILJS_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_EMAILJS_TEMPLATE_ID";
+const products = [
+ {name:"Straw",unit:"roll"},{name:"Newsprint",unit:"bundle"},{name:"POS Thermal Paper",unit:"qty"},
+ {name:"Half-Size Cling Wrap",unit:"roll"},{name:"Clear Tape",unit:"qty"},{name:"Brown Tape",unit:"qty"},
+ {name:"Eco Bag Small",unit:"qty"},{name:"Eco Bag Medium",unit:"qty"},{name:"Eco Bag Large",unit:"qty"},{name:"Eco Bag XL",unit:"qty"}
+];
+const $=id=>document.getElementById(id);
+let db=null, collectionRef=null, allOrders=[], unsubscribe=null, online=false;
+const quantities=Object.fromEntries(products.map(p=>[p.name,0]));
+const branches=["ITECH BACOLOD","GAMEONE BACOLOD","DV BACOLOD","ITECH ILOILO","ITECH DUMAGUETE"];
+const fmtDate=value=>{try{return new Date(value).toLocaleString("en-PH",{dateStyle:"medium",timeStyle:"short"})}catch{return "—"}};
+const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function toast(message){$("toast").textContent=message;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2600)}
+function setConnection(state,message){online=state;$("connectionDot").style.background=state?"#18b879":"#d58a32";$("connectionText").textContent=message}
+function renderProducts(){
+ $("products").innerHTML=products.map((p,i)=>`<div class="product"><div class="product-info"><div class="product-name">${safe(p.name)}</div><div class="unit">Unit: ${safe(p.unit)}</div></div><div class="stepper"><button type="button" aria-label="Decrease ${safe(p.name)}" data-index="${i}" data-step="-1">−</button><input aria-label="${safe(p.name)} quantity" type="number" min="0" max="9999" step="1" value="0" data-qty="${i}"><button type="button" aria-label="Increase ${safe(p.name)}" data-index="${i}" data-step="1">+</button></div></div>`).join("");
+ $("products").addEventListener("click",e=>{const b=e.target.closest("button[data-index]");if(!b)return;const i=Number(b.dataset.index),v=Math.max(0,Math.min(9999,quantities[products[i].name]+Number(b.dataset.step)));quantities[products[i].name]=v;$(`products`).querySelector(`[data-qty="${i}"]`).value=v;updateSummary()});
+ $("products").addEventListener("input",e=>{const inp=e.target.closest("input[data-qty]");if(!inp)return;const i=Number(inp.dataset.qty),v=Math.max(0,Math.min(9999,Math.floor(Number(inp.value)||0)));quantities[products[i].name]=v;inp.value=v;updateSummary()});
+}
+function updateSummary(){const selected=Object.values(quantities).filter(v=>v>0),count=selected.length,total=selected.reduce((a,b)=>a+b,0);$("summaryBranch").textContent=$("branch").value||"Not selected";$("itemCount").textContent=count;$("totalQty").textContent=total;$("summaryTotal").textContent=total;$("submitOrder").disabled=!$("branch").value||count===0||!db}
+function setTab(tab){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));$("orderView").classList.toggle("hidden",tab!=="order");$("warehouseView").classList.toggle("hidden",tab!=="warehouse")}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
+$("branch").value=localStorage.getItem("bcd_order_branch")||"";
+$("branch").addEventListener("change",()=>{localStorage.setItem("bcd_order_branch",$("branch").value);updateSummary();renderBranchHistory()});
+$("themeBtn").addEventListener("click",()=>{const dark=document.documentElement.dataset.theme!=="dark";document.documentElement.dataset.theme=dark?"dark":"light";localStorage.setItem("bcd_order_theme",dark?"dark":"light");$("themeBtn").textContent=dark?"☀":"☾"});
+const savedTheme=localStorage.getItem("bcd_order_theme")||"light";document.documentElement.dataset.theme=savedTheme;$("themeBtn").textContent=savedTheme==="dark"?"☀":"☾";
+function branchOrders(){return allOrders.filter(o=>o.branch===$("branch").value).sort((a,b)=>new Date(b.created)-new Date(a.created))}
+function renderBranchHistory(){const list=branchOrders().slice(0,5);$("branchHistory").innerHTML=!$("branch").value?'<div class="empty">Choose a branch to view its orders.</div>':!list.length?'<div class="empty">No orders submitted by this branch yet.</div>':list.map(o=>`<div class="order-mini"><div><strong>${safe(o.orderNo||"Order")}</strong><small>${fmtDate(o.created)} · ${o.totalQty||0} units</small></div><span class="status ${String(o.status).toLowerCase()}">${safe(o.status)}</span></div>`).join("")}
+function renderWarehouse(){const q=$("searchOrders").value.toLowerCase(),branch=$("filterBranch").value,status=$("filterStatus").value;const list=allOrders.filter(o=>(!q||`${o.orderNo} ${o.branch}`.toLowerCase().includes(q))&&(!branch||o.branch===branch)&&(!status||o.status===status)).sort((a,b)=>new Date(b.created)-new Date(a.created));$("orderCountBadge").textContent=`${list.length} order${list.length===1?"":"s"}`;if(!list.length){$("warehouseOrders").innerHTML='<div class="empty">No matching orders found.</div>';return}
+ $("warehouseOrders").innerHTML=list.map(o=>{const items=Object.entries(o.items||{}).filter(([,v])=>Number(v)>0);return `<details class="order-card"><summary><div><strong>${safe(o.orderNo||"Order")} · ${safe(o.branch)}</strong><small>${fmtDate(o.created)} · ${o.totalQty||0} total units</small></div><span class="status ${String(o.status).toLowerCase()}">${safe(o.status)}</span></summary><div class="order-body"><div class="order-items">${items.map(([n,v])=>`<div>${safe(n)} <strong>× ${Number(v)}</strong></div>`).join("")}</div>${o.note?`<div class="order-note">Note: ${safe(o.note)}</div>`:""}<div class="order-actions"><label class="hint" for="status-${safe(o.id)}">Update status</label><select id="status-${safe(o.id)}" data-status-id="${safe(o.id)}"><option ${o.status==="New"?"selected":""}>New</option><option ${o.status==="Picking"?"selected":""}>Picking</option><option ${o.status==="Shipped"?"selected":""}>Shipped</option><option ${o.status==="Delivered"?"selected":""}>Delivered</option></select><button class="small-btn" data-update-id="${safe(o.id)}">Save status</button></div></div></details>`}).join("");
+}
+$("warehouseOrders").addEventListener("click",async e=>{const b=e.target.closest("[data-update-id]");if(!b)return;if(prompt("Enter warehouse PIN to update this order:")!==WAREHOUSE_PIN){toast("Incorrect PIN. Status not changed.");return}const id=b.dataset.updateId,select=$(`status-${CSS.escape(id)}`);if(!select)return;try{const {doc,updateDoc,serverTimestamp}=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");await updateDoc(doc(db,"branchOrders",id),{status:select.value,updatedAt:serverTimestamp()});toast("Order status updated.");}catch(err){console.error(err);toast("Could not update status. Check database rules.");}});
+["searchOrders","filterBranch","filterStatus"].forEach(id=>$(id).addEventListener(id==="searchOrders"?"input":"change",renderWarehouse));
+async function sendEmail(order){if(!EMAILJS_PUBLIC_KEY.startsWith("YOUR_")&&!EMAILJS_SERVICE_ID.startsWith("YOUR_")&&!EMAILJS_TEMPLATE_ID.startsWith("YOUR_")){try{const {default:emailjs}=await import("https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm");await emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{branch:order.branch,order_no:order.orderNo,items:Object.entries(order.items).filter(([,v])=>v>0).map(([k,v])=>`${k}: ${v}`).join("\n"),note:order.note||"None",created:fmtDate(order.created),status:order.status},{publicKey:EMAILJS_PUBLIC_KEY});return true}catch(e){console.warn("Email notification failed",e);return false}}return null}
+$("submitOrder").addEventListener("click",async()=>{const branch=$("branch").value,items={...quantities},totalQty=Object.values(items).reduce((a,b)=>a+b,0);if(!branch||!totalQty)return;const btn=$("submitOrder");btn.disabled=true;btn.textContent="Sending…";try{const orderNo="BCD-"+new Date().toISOString().slice(0,10).replaceAll("-","")+"-"+Math.random().toString(36).slice(2,6).toUpperCase();const order={branch,items,note:$("note").value.trim(),status:"New",created:new Date().toISOString(),orderNo,totalQty};const {addDoc,serverTimestamp}=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");const saved=await addDoc(collectionRef,{...order,created:serverTimestamp()});const emailResult=await sendEmail(order);Object.keys(quantities).forEach(k=>quantities[k]=0);document.querySelectorAll("[data-qty]").forEach(i=>i.value=0);$("note").value="";updateSummary();toast(emailResult===false?"Order saved. Email notification failed.":"Order submitted successfully!");renderBranchHistory()}catch(e){console.error(e);toast("Order was not sent. Check Firebase setup and rules.");}finally{btn.textContent="Send Order →";updateSummary()}});
+async function initFirebase(){try{if(FIREBASE_CONFIG.apiKey.startsWith("YOUR_")||FIREBASE_CONFIG.projectId.startsWith("YOUR_"))throw new Error("Firebase config not added");const {initializeApp}=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");const {getFirestore,collection,onSnapshot,query,orderBy}=await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");const app=initializeApp(FIREBASE_CONFIG);db=getFirestore(app);collectionRef=collection(db,"branchOrders");unsubscribe=onSnapshot(query(collectionRef,orderBy("created","desc")),(snap)=>{allOrders=snap.docs.map(d=>({id:d.id,...d.data(),created:d.data().created?.toDate?.()?.toISOString?.()||d.data().created||new Date().toISOString()}));setConnection(true,"Live");renderBranchHistory();renderWarehouse();updateSummary()},err=>{console.error(err);setConnection(false,"Offline")});}catch(e){console.warn(e.message);setConnection(false,"Setup needed");$("warehouseOrders").innerHTML='<div class="empty">Connect Firebase to activate shared branch ordering. Add your Firebase web config in the setup section inside this file.</div>';updateSummary()}}
+renderProducts();updateSummary();renderBranchHistory();initFirebase();
+</script>
 </body>
 </html>
